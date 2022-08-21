@@ -3,10 +3,13 @@ Configure application.
 """
 
 import time
+from uuid import uuid4
 
 from flask import Blueprint, Flask, g, jsonify, request, Response
 from flask.logging import create_logger
 import werkzeug.exceptions
+
+from app.logger import get_logger
 
 from . import config
 from .routes import api as api_routes
@@ -23,6 +26,7 @@ def create_app():
     @app.before_request
     def _():
         g.start = time.time()
+        g.log = get_logger(log.name, {"requestId": uuid4()})
 
     @app.after_request
     def _(response: Response):
@@ -33,7 +37,7 @@ def create_app():
             path=request.path,
             status=response.status_code,
         )
-        log.debug(
+        g.log.debug(
             "%s %s %s %s %sms - %s",
             request.method,
             request.url,

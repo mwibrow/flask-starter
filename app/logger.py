@@ -3,9 +3,10 @@ Logger which logs JSON to stdout.
 """
 import json
 import logging
-from logging import Logger
+from logging import Logger, LoggerAdapter
 import sys
 from collections import OrderedDict
+from typing import Dict, Union
 
 
 from boltons import tbutils
@@ -71,10 +72,12 @@ def clear_handlers(name=None):
         pass
 
 
-def get_logger(name) -> Logger:
+def get_logger(name, extra: Dict = None) -> Union[Logger, LoggerAdapter]:
     """
     Get a logger identified by a name.
     """
     log = logging.getLogger(name)
     clear_handlers(name)
+    if extra:
+        return logging.LoggerAdapter(log, extra)
     return log

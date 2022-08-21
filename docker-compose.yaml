@@ -10,10 +10,10 @@ services:
     restart: always
     environment:
       PYTHON_ENV: development
-      APP_PORT: ${APP_PORT}
-      APP_HOST: ${APP_HOST}
+      APP_PORT: 8000
+      APP_HOST: 0.0.0.0
     volumes:
       - "./app/:/usr/src/app/app/"
     container_name: flask-server
     ports:
-      - "${APP_PORT}:${APP_PORT}"
+      - 9876:8000
