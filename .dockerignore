@@ -1,0 +1,4 @@
+.venv/
+.vsvode/
+Dockerfile
+docker-compose.yaml
