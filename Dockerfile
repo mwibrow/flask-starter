@@ -21,11 +21,9 @@ ONBUILD RUN pipenv install --system
 
 FROM base AS build_development
 ONBUILD RUN pipenv install --dev --system
-ONBUILD USER app
 
 FROM build_${PYTHON_ENV}
 
-
 COPY . /usr/src/app
 
-
+USER app
