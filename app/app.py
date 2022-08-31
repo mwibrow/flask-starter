@@ -11,7 +11,7 @@ import werkzeug.exceptions
 
 from app.logger import get_logger
 
-from . import config
+from .config import Config
 from .routes import api as api_routes
 
 
@@ -49,7 +49,7 @@ def create_app():
         )
         return response
 
-    api_router = Blueprint("api", "api", url_prefix=f"/api/{config.API_VERSION}")
+    api_router = Blueprint("api", "api", url_prefix=f"/api/{Config.API_VERSION}")
     api_router = api_routes.configure(api_router)
     app.register_blueprint(api_router)
 

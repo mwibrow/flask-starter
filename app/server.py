@@ -6,17 +6,17 @@ import waitress
 
 from .app import create_app
 from .logger import get_logger, start_logger
-from . import config
+from .config import Config
 
 
 def run():
     """Run the app."""
     logger = get_logger("waitress")
-    logger.setLevel(config.LOG_LEVEL)
+    logger.setLevel(Config.LOG_LEVEL)
     start_logger()
 
     app = create_app()
-    waitress.serve(app, host=config.APP_HOST, port=config.APP_PORT)
+    waitress.serve(app, host=Config.APP_HOST, port=Config.APP_PORT)
 
 
 def watch():
@@ -25,7 +25,7 @@ def watch():
     import hupper  # pylint: disable=import-outside-toplevel
 
     logger = get_logger("hupper")
-    logger.setLevel(config.LOG_LEVEL)
+    logger.setLevel(Config.LOG_LEVEL)
     start_logger()
 
     reloader = hupper.start_reloader("app.server.run", logger=logger, verbose=2)
@@ -34,7 +34,7 @@ def watch():
 
 if __name__ == "__main__":
 
-    if config.DEBUG:
+    if Config.DEBUG:
         watch()
     else:
         run()
